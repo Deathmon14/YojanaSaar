@@ -1,0 +1,278 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-family: 'Inter', sans-serif;
+  --bg-main: #111827;
+  --bg-panel: #1f2937;
+  --border-color: #374151;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --accent-primary: #3b82f6;
+  --accent-primary-hover: #2563eb;
+  --accent-danger: #ef4444;
+  --accent-danger-hover: #dc2626;
+  --user-bubble-bg: #3b82f6;
+  --model-bubble-bg: #374151;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 0 25px rgba(59, 130, 246, 0.1), 0 0 10px rgba(59, 130, 246, 0.05);
+  --border-radius: 0.75rem;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+}
+
+.App {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header header"
+    "main history";
+  gap: 1.5rem;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* --- UPDATED HEADER STYLES --- */
+.App-header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-left: 1rem; /* Give some space on the left */
+}
+.header-avatar {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+}
+.header-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border-color);
+}
+.header-title {
+  text-align: left;
+}
+.header-title h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+}
+.header-title p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+/* ... The rest of the App-main, query-form, filters styles remain the same ... */
+.App-main {
+  grid-area: main;
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.query-section {
+  background-color: var(--bg-panel);
+}
+.query-form {
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+.query-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-family: var(--font-family);
+  resize: vertical;
+  min-height: 60px;
+  box-sizing: border-box;
+  background-color: #374151;
+  color: var(--text-primary);
+}
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.filters input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  background-color: #374151;
+  color: var(--text-primary);
+}
+.query-form button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  background-color: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.error-message {
+  background-color: #5c2121;
+  color: #fca5a5;
+  padding: 1rem;
+  margin: 0 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #991b1b;
+}
+
+.conversation-area {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@keyframes slide-in-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- UPDATED MESSAGE CONTAINER STYLES --- */
+.message-container {
+  display: flex;
+  gap: 10px;
+  max-width: 90%;
+  animation: slide-in-fade-in 0.4s ease-out;
+}
+.message-container.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+.message-container.model {
+  align-self: flex-start;
+  /* The model no longer needs extra space on the left */
+}
+.avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  align-self: flex-end;
+  overflow: hidden;
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.message-bubble {
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  line-height: 1.6;
+  width: fit-content;
+  max-width: 100%;
+}
+.message-bubble.user {
+  background-color: var(--accent-primary);
+  color: white;
+  border-bottom-right-radius: 0.25rem;
+}
+.message-bubble.model {
+  background-color: var(--model-bubble-bg);
+  border: 1px solid var(--border-color);
+  border-bottom-left-radius: 0.25rem;
+  margin-left: 0; /* No longer need extra space */
+}
+/* ... The rest of the styles for scheme-card, history, voice-assistant etc. remain the same ... */
+.scheme-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.scheme-card {
+  background-color: #1f2937;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+.scheme-card h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--text-primary);
+}
+.scheme-card p {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+.scheme-card a { color: var(--accent-primary); text-decoration: none; font-weight: 600; }
+.history-section {
+  grid-area: history;
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1.5rem;
+}
+.history-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.clear-history-button {
+  background-color: transparent;
+  color: var(--accent-danger);
+  border: 1px solid var(--accent-danger);
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.history-summary {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+.history-item {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+}
+.welcome-message, .loading-indicator { text-align: center; padding: 2rem; color: var(--text-secondary); }
+.typing-indicator { display: flex; align-items: center; padding: 0.5rem; }
+.typing-indicator span { height: 8px; width: 8px; background-color: var(--text-secondary); border-radius: 50%; margin: 0 3px; animation: bounce 1.4s infinite ease-in-out both; }
+.typing-indicator span:nth-of-type(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-of-type(2) { animation-delay: -0.16s; }
+@keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
+.voice-assistant { padding: 1rem 0; display: flex; justify-content: center; align-items: center; gap: 1rem; border-top: 1px solid var(--border-color); margin: 1rem 1.5rem 0; }
+.voice-assistant button { padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: 600; border-radius: 0.5rem; border: 1px solid var(--border-color); background-color: var(--bg-panel); color: var(--text-primary); cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
+@media (max-width: 992px) { .App { grid-template-columns: 1fr; grid-template-areas: "header" "main" "history"; height: auto; padding: 1rem; } }
